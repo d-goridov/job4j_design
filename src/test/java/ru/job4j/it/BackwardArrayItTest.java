@@ -3,7 +3,6 @@ package ru.job4j.it;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
