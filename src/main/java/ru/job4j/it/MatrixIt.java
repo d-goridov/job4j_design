@@ -23,18 +23,9 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        int result;
         if (!hasNext()) {
             throw new NoSuchElementException();
-        } else if (column < data[row].length) {
-            result = data[row][column];
-            column++;
-        } else {
-            column = 0;
-            row++;
-            result = data[row][column];
-            column++;
         }
-        return result;
+        return data[row][column++];
     }
 }
