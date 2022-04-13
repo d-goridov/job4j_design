@@ -10,8 +10,6 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int modCount = 0;
 
-    private int count = 0;
-
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
@@ -25,16 +23,13 @@ public class SimpleArrayList<T> implements List<T> {
         if (size == container.length) {
             grow();
         }
-        container[count++] = value;
-        size += 1;
+        container[size++] = value;
         modCount++;
     }
 
     @Override
     public T set(int index, T newValue) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, container.length);
         T rsl = container[index];
         container[index] = newValue;
         return rsl;
@@ -42,24 +37,19 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, container.length);
         T rsl = container[index];
         System.arraycopy(container, index + 1,
                 container, index, container.length - index - 1);
         container[container.length - 1] = null;
         size--;
-        count--;
         modCount++;
         return rsl;
     }
 
     @Override
     public T get(int index) {
-        if (Objects.checkIndex(index, container.length) != index) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, container.length);
         return container[index];
     }
 
