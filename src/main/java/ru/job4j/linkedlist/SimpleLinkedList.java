@@ -40,16 +40,17 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
+        E rsl = null;
         int i = -1;
         Node<E> start = first;
         while (start != null) {
             i++;
             if (i == index) {
-                return start.element;
+                rsl = start.element;
             }
             start = start.next;
         }
-        return null;
+        return rsl;
     }
 
     @Override
