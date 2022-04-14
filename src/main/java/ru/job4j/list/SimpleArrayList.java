@@ -15,7 +15,11 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     private void grow() {
-        container = Arrays.copyOf(container, container.length * 2);
+        if (container.length == 0) {
+            container = Arrays.copyOf(container, 1);
+        } else {
+            container = Arrays.copyOf(container, container.length * 2);
+        }
     }
 
     @Override
