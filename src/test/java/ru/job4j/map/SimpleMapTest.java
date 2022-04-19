@@ -33,7 +33,7 @@ public class SimpleMapTest {
         map.put(5, "Honda");
         map.put(5, "Yamaha");
         assertThat(map.getSize(), is(1));
-        assertThat(map.get(5), is("Yamaha"));
+        assertThat(map.get(5), is("Honda"));
     }
 
     @Test

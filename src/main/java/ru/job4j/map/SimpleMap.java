@@ -17,43 +17,25 @@ public class SimpleMap<K, V> implements Map<K, V> {
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
     /**
-     * метод увеличивает размер мапы если елемент добавлен
-     * в противном случае размер не меняется
+     * метод добавляет элемент в мапу
+     * и расширяет при необходимости
      * @param key - ключ
      * @param value - значение
      * @return true - размер увеличился, false - остался прежним.
      */
     @Override
     public boolean put(K key, V value) {
-        boolean rsl = false;
-        if (putFor(key, value)) {
-            size++;
-            modCount++;
-            rsl = true;
+        if (size >= (table.length * LOAD_FACTOR)) {
+            expand();
         }
-        return rsl;
-    }
-
-    /**
-     * метод добавляет либо заменяет пару
-     *
-     * @param key   - ключ пары
-     * @param value - значение
-     * @return true - если добавлен, false - заменен.
-     */
-    public boolean putFor(K key, V value) {
         int index = indexFor(hash(key));
         MapEntry<K, V> entry = new MapEntry<>(key, value);
         boolean rsl = false;
         if (table[index] == null) {
             table[index] = entry;
-            if (size >= (table.length * LOAD_FACTOR)) {
-                expand();
-            }
             rsl = true;
-        }
-        if ((table[index] != null) && table[index].key.equals(key)) {
-            table[index] = entry;
+            size++;
+            modCount++;
         }
         return rsl;
     }
@@ -81,9 +63,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
      * @return индекс бакета по которому располагается пара
      */
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
+    /**
+     * метод производит расширение вместимости в 2 раза
+     */
     private void expand() {
         capacity *= 2;
         table = new MapEntry[capacity];
@@ -102,7 +87,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V rsl = null;
-        int index = (table.length - 1) & hash(key);
+        int index = indexFor(hash(key));
         if ((table[index] != null) && (table[index].key.equals(key))) {
             rsl = table[index].value;
         }
@@ -132,22 +117,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return new Iterator<>() {
             final int expectedModCount = modCount;
             int cursor = 0;
-            MapEntry<K, V> entry;
 
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                boolean rsl = false;
-                if (cursor < table.length) {
-                    do {
-                        entry = table[cursor++];
-                    } while (entry == null && cursor < table.length);
-                    rsl = entry != null;
-                    cursor--;
+                while (cursor < table.length - 1 && table[cursor] == null) {
+                     cursor++;
                 }
-                return rsl;
+                return table[cursor] != null;
             }
 
             @Override
