@@ -21,7 +21,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
      * и расширяет при необходимости
      * @param key - ключ
      * @param value - значение
-     * @return true - размер увеличился, false - остался прежним.
+     * @return true - если произошло добавление,
+     * в противном случае - false
      */
     @Override
     public boolean put(K key, V value) {
@@ -49,6 +50,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     /**
+     * метод вычисляет хеш ключа
      * @param key ключ пары
      * @return хеш ключа
      */
@@ -68,15 +70,22 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     /**
      * метод производит расширение вместимости в 2 раза
+     * и рехеширует ключи в мапе
      */
     private void expand() {
         capacity *= 2;
-        table = new MapEntry[capacity];
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> element : table) {
             if (element != null) {
-                put(element.key, element.value);
+                K key = element.key;
+                int hash = hash(key);
+                int index = indexFor(hash);
+                if (newTable[index] == null) {
+                    newTable[index] = element;
+                }
             }
         }
+        table = newTable;
     }
 
     /**
@@ -123,10 +132,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (cursor < table.length - 1 && table[cursor] == null) {
+                while (cursor < table.length  && table[cursor] == null) {
                      cursor++;
                 }
-                return table[cursor] != null;
+                return cursor < table.length;
             }
 
             @Override
