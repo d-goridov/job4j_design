@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class SimpleTreeTest {
@@ -48,5 +49,24 @@ public class SimpleTreeTest {
     public void whenNotAddByNotFindParent() {
         Tree<Integer> tree = new SimpleTree<>(1);
         assertFalse(tree.add(2, 6));
+    }
+
+    @Test
+    public void whenNoBinary() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void whenYesBinary() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(2, 5);
+        assertTrue(tree.isBinary());
     }
 }
