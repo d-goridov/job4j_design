@@ -24,7 +24,7 @@ public class Config {
                      String key = str[0];
                      String value = str[1];
                      if (key.isEmpty() || value.isEmpty()) {
-                         throw new IllegalArgumentException();
+                         throw new IllegalArgumentException("String doesn't match pattern \"key - value\"");
                      }
                      values.put(key, value);
                  }
