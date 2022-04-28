@@ -9,14 +9,14 @@ public class ArgsName {
 
     public String get(String key) {
         if (!values.containsKey(key)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("The key does not exist.");
         }
         return values.get(key);
     }
 
     private void parse(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Incorrect number of argument");
         }
         for (String s: args) {
             String[] array = validate(s);
@@ -26,13 +26,12 @@ public class ArgsName {
 
     private String[] validate(String string) {
         if (!string.startsWith("-") || !string.contains("=")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Arguments do not match pattern \"-key=value\"");
         }
-        String[] array = string.split("=", 2);
+        String[] array = string.replaceFirst("-", "").split("=", 2);
         if (array[0].isEmpty() || array[1].isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Arguments do not match pattern \"-key=value\"");
         }
-        array[0] = array[0].replace("-", "");
         return array;
     }
 
