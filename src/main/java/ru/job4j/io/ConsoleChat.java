@@ -32,6 +32,7 @@ public class ConsoleChat {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             do {
+                System.out.print("User: ");
                 userSay = reader.readLine();
                 log.add(userSay);
                 if (STOP.equals(userSay)) {
@@ -44,7 +45,7 @@ public class ConsoleChat {
                     botSleep = false;
                 } else if (!botSleep && !OUT.equals(userSay)) {
                     botSay = botAnswers.get(random.nextInt(botAnswers.size()));
-                    System.out.println(botSay);
+                    System.out.println("Pikachu: " + botSay);
                     log.add(botSay);
                 }
             } while (!OUT.equals(userSay));
