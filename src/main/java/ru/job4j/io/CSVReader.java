@@ -1,6 +1,5 @@
 package ru.job4j.io;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -23,12 +22,6 @@ public class CSVReader {
     private static void validation(Path path, String delimiter, String out) {
         if (!path.toFile().exists() || !(path.toString().contains(".csv"))) {
             throw new IllegalArgumentException("File at given path does not exist or the extension is incorrect");
-        }
-        if (!"stdout".equals(out) && !new File(out).isFile()) {
-            throw new IllegalArgumentException("Incorrect arg \"out\". "
-                    + "If you want print result to console enter \"stdout\"."
-                    + "If write to file, enter correct pattern of fail ");
-
         }
         if (!";".equals(delimiter)) {
             throw new IllegalArgumentException("Delimeter set incorrectly, use \";\" ");
