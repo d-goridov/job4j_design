@@ -1,7 +1,10 @@
 # Проект содержит решения блока "Junior" курса Job4j.
 В этом уровне рассмотрены темы:
-- Collections
+- Collections - внутреннее устройство и алгоритмическая сложность.
 - IO, Socket
-- SQL
+- SQL - Общие сведения о базах данных на основе PostgreSQL. Базовый синтаксис SQL
+  Запросы Select, Join, Outer Left, Right
 - JDBC
+- Solid
+- Сборщик мусора
 
