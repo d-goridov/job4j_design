@@ -15,11 +15,11 @@ public class CSVReader {
         String delimeter = argsName.get("delimiter");
         String out = argsName.get("out");
         List<String> filter = Arrays.stream(argsName.get("filter").split(",")).toList();
-        validation(path, delimeter, out);
+        validation(path, delimeter);
         printOut(out, delimeter, path, filter);
     }
 
-    private static void validation(Path path, String delimiter, String out) {
+    private static void validation(Path path, String delimiter) {
         if (!path.toFile().exists() || !(path.toString().contains(".csv"))) {
             throw new IllegalArgumentException("File at given path does not exist or the extension is incorrect");
         }
