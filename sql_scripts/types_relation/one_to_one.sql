@@ -1,10 +1,10 @@
-CREATE TABLE card(
+CREATE TABLE cards(
     id serial primary key,
 	seria int,
     number int
     );
 
-CREATE TABLE pet(
+CREATE TABLE pets(
     id serial primary key,
 	pets_name varchar(15),
 	cards_id int references cards(id) unique
