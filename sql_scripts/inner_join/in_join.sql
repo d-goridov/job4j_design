@@ -23,8 +23,8 @@ select st.id as id, st.name as student, fac.name as faculty
 from students as st join faculty as fac on (st.faculty_id = fac.id)
 order by st.id;
 
-select st.id as id, st.name as student, fac.id as id_fac, fac.name as faculty
-from students as st join faculty as fac on (st.id = fac.id)
+select st.name as student, fac.name as faculty
+from students as st join faculty as fac on (st.faculty_id = fac.id)
 order by st.name;
 
 select st.id as id, st.name as student, fac.name as faculty
