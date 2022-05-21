@@ -7,7 +7,7 @@ create table products (
     id serial primary key,
     name varchar(255),
     type_id int references type(id),
-    date expired_date,
+    expired_date date,
     price float
 );
 
