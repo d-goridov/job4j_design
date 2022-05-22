@@ -36,13 +36,15 @@ insert into cars(name, model, body_id, engine_id, gearbox_id) values
 ('Volkswagen', 'Passat', 3, 2, 1), ('Ford', 'Transit', 7, 1, 1),
 ('Audi', 'A6', 3, 2, 2), ('Nissan', 'Almera', 1, 1, 1),
 ('Bmw', 'M3', 4, 2, 2), ('Mersedes', 'Vito', 7, 2, 1),
-('Skoda', 'Rapid', 1, 1, 2), ('Renault', 'Talisman', 3, 2, 2);
+('Skoda', 'Rapid', 1, 1, 2), ('Renault', 'Talisman', 3, 2, 2),
+('Peugeot', '307', 2, null, 1), ('Toyota', 'Avensis', 1, 2, null)
+('Lexus', 'IS200', null, null, null);
 
 select auto.name, auto.model, b.name, e.name, g.name
 from cars as auto
-join body b on auto.body_id = b.id
-join engine e on e.id = auto.engine_id
-join gearbox g on g.id = auto.gearbox_id;
+left join body b on auto.body_id = b.id
+left join engine e on e.id = auto.engine_id
+left join gearbox g on g.id = auto.gearbox_id;
 
 select body.name from cars right join body on body.id = cars.body_id
 where cars.model is null;
