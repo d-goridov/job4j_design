@@ -12,5 +12,5 @@ insert into teens (name, gender) values
 ('Konstantin', 'M'), ('Nina', 'W'), ('Margarita', 'W'),
 ('Vladislav', 'M'), ('Gennadiy', 'M');
 
-select men.name, woman.name from teens as men
-cross join teens as woman where men.gender <> woman.gender;
+select n1.name || ' and ' || n2.name as pair from teens as n1
+cross join teens as n2 where n1.gender <> n2.gender;
