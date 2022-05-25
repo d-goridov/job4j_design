@@ -1,6 +1,6 @@
 package ru.job4j.jdbc;
 
-import java.io.FileReader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -104,7 +104,9 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        properties.load(new FileReader("app.properties"));
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+           properties.load(in);
+        }
         try (TableEditor tableEditor = new TableEditor(properties)) {
             System.out.println("CREATE TABLE");
             String table =  "New_Table";
@@ -118,6 +120,5 @@ public class TableEditor implements AutoCloseable {
             System.out.println("DROP TABLE");
             tableEditor.dropTable(table);
         }
-
     }
 }
