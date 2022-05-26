@@ -1,0 +1,7 @@
+Petr Arsentev;parsentev@yandex.ru;
+Ivan Ivanov;iivanov@gmail.com;
+Evgeniy Petrov;petrov@mail.ru;
+Anna Karenina;karenina@gmail.com;
+Nikolay Teterin;teterin@mail.ru;
+Olga Vyatskaya;vyatskaya@yandex.ru;
+Oleg Chalov;chalov@mail.ru;
