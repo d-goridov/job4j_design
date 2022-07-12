@@ -14,6 +14,9 @@ public class MaxMin {
     }
 
     private <T> T getElement(List<T> value, Comparator<T> comparator, Predicate<Integer> predicate) {
+        if (value.isEmpty()) {
+            return null;
+        }
         T rsl = value.get(0);
         for (T element: value) {
             if (predicate.test(comparator.compare(rsl, element))) {
