@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class DirFileCache extends AbstractCache<String, String> {
+
     private final String cachingDir;
 
     public DirFileCache(String cachingDir) {

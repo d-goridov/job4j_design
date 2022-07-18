@@ -3,7 +3,6 @@ package ru.job4j.gc.cash;
 import java.util.Scanner;
 
 public class Emulator {
-
     private final Scanner scanner = new Scanner(System.in);
     private DirFileCache dirFileCache;
     private final String menu = "Выберите действие: " + System.lineSeparator()
