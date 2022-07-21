@@ -5,11 +5,17 @@ import java.util.Scanner;
 public class Emulator {
     private final Scanner scanner = new Scanner(System.in);
     private DirFileCache dirFileCache;
-    private final String menu = "Выберите действие: " + System.lineSeparator()
-        + "1. Установить директорию" + System.lineSeparator()
-        + "2. Добавить файл в кэш" + System.lineSeparator()
-        + "3. Получить содержимое файла" + System.lineSeparator()
-        + "4. Выход" + System.lineSeparator();
+    private static final int SET_DIR = 1;
+    private static final int ADD_TO_CASH = 2;
+    private static final int GET_TEXT = 3;
+    private static final int EXIT = 4;
+    private static final String MENU = """
+         Выберите действие:
+         1. Установить директорию
+         2. Добавить файл в кэш
+         3. Получить содержимое файла
+         4. Выход
+         """;
 
     private void setDir() {
         System.out.println("Укажите директорию");
@@ -26,19 +32,19 @@ public class Emulator {
     private void getText() {
         System.out.println("Укажите файл");
         String key = scanner.next();
-        System.out.println(dirFileCache.load(key));
+        System.out.println(dirFileCache.get(key));
     }
 
     private void start() {
         int choice = -1;
         while (choice != 4) {
-            System.out.println(menu);
+            System.out.println(MENU);
             choice = scanner.nextInt();
             switch (choice) {
-                case 1 -> setDir();
-                case 2 -> putToCash();
-                case 3 -> getText();
-                case 4 -> System.out.println("Выход");
+                case SET_DIR -> setDir();
+                case ADD_TO_CASH -> putToCash();
+                case GET_TEXT -> getText();
+                case EXIT -> System.out.println("Выход");
                 default -> System.out.println("Некорректный выбор");
             }
         }
