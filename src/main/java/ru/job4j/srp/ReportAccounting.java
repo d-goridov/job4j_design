@@ -8,6 +8,8 @@ public class ReportAccounting implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
+    public static final int EXCHANGE_RATE = 55;
+
     private Store store;
 
     public ReportAccounting(Store store) {
@@ -20,7 +22,7 @@ public class ReportAccounting implements Report {
         text.append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator());
         for (Employee employee : store.findBy(filter)) {
-            String salary = String.format(Locale.ROOT, "%.1f RUB", employee.getSalary() * 55);
+            String salary = String.format(Locale.ROOT, "%.1f RUB", employee.getSalary() * EXCHANGE_RATE);
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")

@@ -26,17 +26,17 @@ public class ReportAccountingTest {
                 .append(worker1.getName()).append(";")
                 .append(DATE_FORMAT.format(worker1.getHired().getTime())).append(";")
                 .append(DATE_FORMAT.format(worker1.getFired().getTime())).append(";")
-                .append(worker1.getSalary() * 55).append(" RUB").append(";")
+                .append(worker1.getSalary() * ReportAccounting.EXCHANGE_RATE).append(" RUB").append(";")
                 .append(System.lineSeparator())
                 .append(worker2.getName()).append(";")
                 .append(DATE_FORMAT.format(worker2.getHired().getTime())).append(";")
                 .append(DATE_FORMAT.format(worker2.getFired().getTime())).append(";")
-                .append(worker2.getSalary() * 55).append(" RUB").append(";")
+                .append(worker2.getSalary() * ReportAccounting.EXCHANGE_RATE).append(" RUB").append(";")
                 .append(System.lineSeparator())
                 .append(worker3.getName()).append(";")
                 .append(DATE_FORMAT.format(worker3.getHired().getTime())).append(";")
                 .append(DATE_FORMAT.format(worker3.getFired().getTime())).append(";")
-                .append(worker3.getSalary() * 55).append(" RUB").append(";")
+                .append(worker3.getSalary() * ReportAccounting.EXCHANGE_RATE).append(" RUB").append(";")
                 .append(System.lineSeparator());
         assertThat(accounting.generate(em -> true), is(expected.toString()));
     }
