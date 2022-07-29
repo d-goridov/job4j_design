@@ -2,14 +2,12 @@ package ru.job4j.lsp;
 
 public class Shop extends AbstractStore {
 
-    private static final int DISCOUNT = 35;
-
     @Override
     public boolean add(Food food) {
         boolean res = check(food);
         if (check(food)) {
             if (checkForDiscount(food)) {
-                food.setDiscount(DISCOUNT);
+                food.setNewPriceWithDiscount();
             }
             list.add(food);
         }
@@ -17,13 +15,13 @@ public class Shop extends AbstractStore {
     }
 
     private boolean checkForDiscount(Food food) {
-        return FoodCondition.getPercentCondition(food) >= HIGH_PERCENT;
+        return condition.getPercentCondition(food) >= HIGH_PERCENT;
     }
 
     @Override
     public boolean check(Food food) {
-        return FoodCondition.getPercentCondition(food) >= LOW_PERCENT
-                && FoodCondition.getPercentCondition(food) < OUT_PERCENT;
+        return condition.getPercentCondition(food) >= LOW_PERCENT
+                && condition.getPercentCondition(food) < OUT_PERCENT;
     }
 
 

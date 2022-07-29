@@ -14,8 +14,9 @@ import java.util.List;
 public abstract class AbstractStore implements Store {
 
     protected final List<Food> list = new ArrayList<>();
+    protected FoodCondition condition = new FoodCondition();
 
     public List<Food> getContent() {
-        return list;
+        return new ArrayList<>(list);
     }
 }

@@ -14,6 +14,6 @@ public class Trash extends AbstractStore {
 
     @Override
     public boolean check(Food food) {
-        return FoodCondition.getPercentCondition(food) >= OUT_PERCENT;
+        return condition.getPercentCondition(food) >= OUT_PERCENT;
     }
 }

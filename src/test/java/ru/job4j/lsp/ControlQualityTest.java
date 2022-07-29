@@ -7,17 +7,17 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 
 public class ControlQualityTest {
 
-    private static final int DISCOUNT = 35;
-    private static final int NON_DISCOUNT = 15;
-    Store ware;
-    Store shop;
-    Store trash;
-    ControlQuality quality;
+    private Store ware;
+    private Store shop;
+    private Store trash;
+    private ControlQuality quality;
+    private LocalDate date = LocalDate.now();
 
     @Before
     public void initStores() {
@@ -29,39 +29,55 @@ public class ControlQualityTest {
 
     @Test
     public void whenAddToWare() {
-        Food potato = new Potato("Young", LocalDate.of(2022, 8, 30),
-                LocalDate.of(2022, 7, 27), 50.0, 15);
+        Food potato = new Potato("Young", date.plusMonths(1),
+                (date.minusDays(2)), 50.0, 15);
         List<Food> foods = List.of(potato);
         quality.allocation(foods);
-        assertEquals(potato, ware.getContent().get(0));
+        assertThat(ware.getContent(), is(foods));
     }
 
     @Test
     public void whenAddToShop() {
-        Food choco = new Chocolate("AlpenGold", LocalDate.of(2022, 8, 10),
-                LocalDate.of(2022, 7, 19), 50.0, 15);
+        Food choco = new Chocolate("AlpenGold", date.plusDays(12),
+                date.minusDays(10), 50.0, 15);
         List<Food> foods = List.of(choco);
         quality.allocation(foods);
-        assertEquals(choco, shop.getContent().get(0));
-        Assert.assertEquals(choco.getDiscount(), NON_DISCOUNT);
+        assertThat(shop.getContent(), is(foods));
+        Assert.assertEquals(choco.getDiscount(), 15.0, 0.01);
     }
 
     @Test
     public void whenAddToShopWithDiscount() {
-        Food choco = new Chocolate("Milka", LocalDate.of(2022, 7, 29),
-                LocalDate.of(2022, 7, 5), 50.0, 15);
+        Food choco = new Chocolate("Milka", date.plusDays(2),
+                date.minusDays(25), 50.0, 20);
         List<Food> foods = List.of(choco);
         quality.allocation(foods);
-        assertEquals(choco, shop.getContent().get(0));
-        Assert.assertEquals(choco.getDiscount(), DISCOUNT);
+        assertThat(shop.getContent(), is(foods));
+        Assert.assertEquals(40.0, choco.getPrice(), 0.01);
     }
 
     @Test
     public void whenAddToTrash() {
-        Food potato = new Potato("Old", LocalDate.of(2022, 7, 19),
-                LocalDate.of(2022, 7, 5), 50.0, 15);
+        Food potato = new Potato("Old", date.minusDays(10),
+                date.minusDays(24), 50.0, 15);
         List<Food> foods = List.of(potato);
         quality.allocation(foods);
-        assertEquals(potato, trash.getContent().get(0));
+        assertThat(trash.getContent(), is(foods));
+    }
+
+    @Test
+    public void whenAddManyProducts() {
+        Food item1 = new Potato("Free", date.plusDays(30), date.minusDays(2), 62.5, 15);
+        Food item2 = new Chocolate("Snickers", date.plusDays(4), date.minusDays(25), 52.6, 33);
+        Food item3 = new Chocolate("Mars", date.minusDays(3), date.minusDays(30), 51.5, 21);
+        Food item4 = new Chocolate("Bounty", date.plusDays(40), date.minusDays(5), 44.5, 18);
+        List<Food> foods = List.of(item1, item2, item3, item4);
+        quality.allocation(foods);
+        assertThat(ware.getContent(), is(List.of(item1, item4)));
+        assertThat(shop.getContent(), is(List.of(item2)));
+        Assert.assertEquals(35.25, item2.getPrice(), 0.01);
+        assertThat(trash.getContent(), is(List.of(item3)));
+
+
     }
 }

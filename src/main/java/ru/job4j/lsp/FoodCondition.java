@@ -11,15 +11,19 @@ import static java.time.temporal.ChronoUnit.DAYS;
  */
 public class FoodCondition {
 
-    private static LocalDate currentDate = LocalDate.now();
+    private LocalDate currentDate;
+
+    public FoodCondition() {
+        this.currentDate =  LocalDate.now();
+    }
 
     /**
      * метод считает срок годности в днях
      * @param food - целевой объект для вычисления
      * @return - количество дней
      */
-    private static double diffCreateExpiryDate(Food food) {
-        return (double) DAYS.between(food.createDate, food.expiryDate);
+    private double diffCreateExpiryDate(Food food) {
+        return (double) DAYS.between(food.getCreateDate(), food.getExpiryDate());
 
     }
 
@@ -29,8 +33,8 @@ public class FoodCondition {
      * @param food - целевой объект для вычисления
      * @return - количество дней
      */
-    private static double diffCreateCurrentDate(Food food) {
-        return (double) DAYS.between(food.createDate, currentDate);
+    private double diffCreateCurrentDate(Food food) {
+        return (double) DAYS.between(food.getCreateDate(), currentDate);
     }
 
     /**
@@ -39,7 +43,7 @@ public class FoodCondition {
      * @param food - целевой объект для вычисления
      * @return - количество процентов
      */
-    public static double getPercentCondition(Food food) {
+    public double getPercentCondition(Food food) {
         return (diffCreateCurrentDate(food) / diffCreateExpiryDate(food)) * 100;
     }
 

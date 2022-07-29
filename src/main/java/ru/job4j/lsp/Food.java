@@ -3,11 +3,11 @@ package ru.job4j.lsp;
 import java.time.LocalDate;
 
 public abstract class Food {
-    String name;
-    LocalDate expiryDate;
-    LocalDate createDate;
-    double price;
-    int discount;
+    private String name;
+    private LocalDate expiryDate;
+    private LocalDate createDate;
+    private double price;
+    private int discount;
 
     public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         this.name = name;
@@ -37,8 +37,8 @@ public abstract class Food {
         return discount;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
+    public void setNewPriceWithDiscount() {
+        price = price - price * discount / 100;
     }
 
     @Override
